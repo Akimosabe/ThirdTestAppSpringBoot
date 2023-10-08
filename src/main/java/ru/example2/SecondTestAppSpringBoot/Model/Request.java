@@ -16,27 +16,43 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 
 public class Request {
-    @NotBlank()
+    @NotBlank(message = "UID обязателен")
     @Size(max = 32)
     private String uid;
 
-    @NotBlank
+    @NotBlank(message = "Идентификатор операции обязателен")
     @Size(max = 32)
     private String operationUid;
 
-    private String systemName;
+    private SysName systemName;
 
-    @NotBlank
+    @NotBlank(message = "Не указано время создания")
     private String systemTime;
 
     private String source;
 
-    @Min(1)
-    @Max(100000)
+    @Min(value = 1, message = "communicationId >= 1")
+    @Max(value = 100000, message = "communicationId >= 100000")
     private int communicationId;
 
     private int templateId;
     private int productCode;
     private int smsCode;
 
+    @Override
+    public String toString() {
+        return "{" +
+                "uid='" + uid + '\'' +
+                ", operationUid='" + operationUid + '\'' +
+                ", systemName='" + systemName + '\'' +
+                ", systemTime='" + systemTime + '\'' +
+                ", source='" + source + '\'' +
+                ", communicationId=" + communicationId +
+                ", templateId=" + templateId +
+                ", productCode=" + productCode +
+                ", smsCode=" + smsCode +
+                '}';
+    }
 }
+
+
