@@ -14,7 +14,6 @@ import ru.example2.SecondTestAppSpringBoot.Exception.UnsupportedCodeException;
 import ru.example2.SecondTestAppSpringBoot.Exception.ValidationFailedException;
 import ru.example2.SecondTestAppSpringBoot.Model.*;
 import ru.example2.SecondTestAppSpringBoot.Service.ModifyResponseService;
-import ru.example2.SecondTestAppSpringBoot.Service.Timediff;
 import ru.example2.SecondTestAppSpringBoot.Service.ValidationService;
 import ru.example2.SecondTestAppSpringBoot.Util.DateTimeUtil;
 
@@ -39,6 +38,8 @@ public class MyController {
     public ResponseEntity<Response> feedback(@Valid @RequestBody Request request,
                                              BindingResult bindingResult) {
 
+        long startTime = System.currentTimeMillis();
+
         log.info("Received request: {}", request);
 
 
@@ -52,8 +53,7 @@ public class MyController {
                 .build();
 
         log.info("Generated response: {}", response);
-        
-        Timediff.diff(request, response);
+
 
         try {
             validationService.isValid(bindingResult);
@@ -84,6 +84,11 @@ public class MyController {
 
         modifyResponseService.modify(response);
         log.info("Modified response: {}", response);
+
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+        log.info("Diff: {} ms", elapsedTime);
+
         return new ResponseEntity<>(modifyResponseService.modify(response), HttpStatus.OK);
 
     }
