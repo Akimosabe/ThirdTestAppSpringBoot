@@ -14,6 +14,7 @@ import ru.example2.SecondTestAppSpringBoot.Exception.UnsupportedCodeException;
 import ru.example2.SecondTestAppSpringBoot.Exception.ValidationFailedException;
 import ru.example2.SecondTestAppSpringBoot.Model.*;
 import ru.example2.SecondTestAppSpringBoot.Service.ModifyResponseService;
+import ru.example2.SecondTestAppSpringBoot.Service.Timediff;
 import ru.example2.SecondTestAppSpringBoot.Service.ValidationService;
 import ru.example2.SecondTestAppSpringBoot.Util.DateTimeUtil;
 
@@ -51,7 +52,8 @@ public class MyController {
                 .build();
 
         log.info("Generated response: {}", response);
-
+        
+        Timediff.diff(request, response);
 
         try {
             validationService.isValid(bindingResult);

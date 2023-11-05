@@ -24,7 +24,7 @@ public class Request {
     @Size(max = 32)
     private String operationUid;
 
-    private SysName systemName;
+    private String systemName;
 
     @NotBlank(message = "Не указано время создания")
     private String systemTime;
